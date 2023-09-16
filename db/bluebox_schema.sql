@@ -38,9 +38,9 @@ create table tb_cliente (
 	ds_cpf 				varchar(100) not null,
 	id_endereco 		int,
 	dt_nascimento 		date not null,
-	img_perfil 			varchar not null,
+	img_perfil 			varchar(500) not null,
 	dt_cadastro 		date not null,
-	foreign key (id_endereco) references tb_endereco(id_endereco),
+	foreign key (id_endereco) references tb_endereco(id_endereco)
 );
 
 
@@ -119,12 +119,17 @@ create table tb_tipo_pagamento (
 	tp_pagamento 		int not null
 );
 
+create table tb_estado_pedido (
+	id_estado_pedido	int primary key not null auto_increment,
+    ds_estado_pedido 	varchar(100) not null
+);
+
 create table tb_pedido (
 	id_pedido 			int primary key not null auto_increment,
 	id_cliente 			int not null,
 	id_produto 			int not null,
 	vl_preco_total 		numeric not null,
-	id_estado 			int not null,
+	id_estado_pedido	int not null,
 	id_tipo_pagamento 	int not null,
 	dt_compra 			date not null,
 	dt_aprovacao 		date not null,
@@ -132,6 +137,6 @@ create table tb_pedido (
 	dt_entrega			date not null,
 	foreign key (id_cliente) references tb_cliente(id_cliente),
 	foreign key (id_produto) references tb_produto(id_produto),
-	foreign key (id_estado) references tb_estado_pedido(id_estado),
+	foreign key (id_estado_pedido) references tb_estado_pedido(id_estado_pedido),
 	foreign key (id_tipo_pagamento) references tb_tipo_pagamento(id_pagamento)
 );
