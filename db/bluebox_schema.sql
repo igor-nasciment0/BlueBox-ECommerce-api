@@ -140,3 +140,15 @@ create table tb_pedido (
 	foreign key (id_estado_pedido) references tb_estado_pedido(id_estado_pedido),
 	foreign key (id_tipo_pagamento) references tb_tipo_pagamento(id_pagamento)
 );
+
+
+-- produto aleatório para testes
+       
+insert into tb_categoria(ds_categoria)
+	 values ('console');
+
+insert into tb_marca(ds_marca)
+	 values ('nintendo');
+		
+insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
+     values('b', 100, false, 1, 'a', 'a', 1, 1, true, 100, now());
