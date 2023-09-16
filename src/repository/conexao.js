@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import mysql from 'mysql2/promise';
 
 let dados = {
@@ -8,5 +9,6 @@ let dados = {
 }
 
 let con = await mysql.createConnection(dados);
+console.log('Conexão criada');
 
 export default con;

@@ -1,0 +1,10 @@
+ESTUDO DOS ENDPOINTS DO ADM
+
+//// CONSULTAR PRODUTO
+{
+    MÉTODO: GET
+    CAMINHO: /produto?nome=
+
+    request: nome
+    response: [{produto}]
+}

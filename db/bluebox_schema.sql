@@ -12,7 +12,7 @@ create table tb_admin (
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
 	ds_cpf 				varchar(100) not null,
-	img_perfil 			varchar(100) not null
+	img_perfil 			varchar(100)
 );
 
 
@@ -25,7 +25,7 @@ create table tb_endereco (
 	ds_cidade 			varchar(200) not null,
 	ds_cep 				varchar(100) not null,
 	nr_endereco 		int not null,
-	ds_complemento 		varchar(20) not null
+	ds_complemento 		varchar(20)
 );
 
 create table tb_cliente (
@@ -36,9 +36,9 @@ create table tb_cliente (
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
 	ds_cpf 				varchar(100) not null,
-	id_endereco 		int,
+	id_endereco 		int not null,
 	dt_nascimento 		date not null,
-	img_perfil 			varchar(500) not null,
+	img_perfil 			varchar(500),
 	dt_cadastro 		date not null,
 	foreign key (id_endereco) references tb_endereco(id_endereco)
 );
@@ -62,7 +62,7 @@ create table tb_produto (
 	id_produto 			int primary key not null auto_increment,
 	nm_produto 			varchar(300) not null,
 	vl_preco 			numeric not null,
-	vl_promocional		numeric not null,
+	vl_promocional		numeric,
 	bt_promocao 		boolean not null,
 	qtd_estoque 		numeric not null,
 	ds_produto 			varchar(800) not null,
