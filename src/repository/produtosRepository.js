@@ -21,3 +21,16 @@ export async function consultaProduto(nome) {
     let [resp] = await con.query(sql, [nome, nome, nome])
     return resp;
 }
+
+export async function deletarProduto(id) {
+    
+    let sql = 
+    `
+        delete from tb_produto
+         where id_produto = ?
+    `
+
+    let [resp] = await con.query(sql, [id]);
+    
+    return resp;
+}
