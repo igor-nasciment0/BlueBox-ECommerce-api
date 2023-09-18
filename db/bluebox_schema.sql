@@ -32,14 +32,14 @@ create table tb_cliente (
 	id_cliente 			int primary key  not null auto_increment,
 	ds_nome 			varchar(100) not null,
 	ds_sobrenome 		varchar(100) not null,
-	ds_email 			varchar(100) not null,
+	ds_email 			varchar(200) not null,
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
 	ds_cpf 				varchar(100) not null,
 	id_endereco 		int not null,
 	dt_nascimento 		date not null,
 	img_perfil 			varchar(500),
-	dt_cadastro 		date not null,
+	dt_cadastro 		datetime not null,
 	foreign key (id_endereco) references tb_endereco(id_endereco)
 );
 
@@ -71,7 +71,7 @@ create table tb_produto (
 	id_marca 			int not null,
 	bt_usado 			boolean not null,
 	vl_peso 			int not null,
-	dt_cadastro 		date not null,
+	dt_cadastro 		datetime not null,
 	foreign key (id_categoria) references tb_categoria(id_categoria),
 	foreign key (id_marca) references tb_marca(id_marca)
 );
@@ -100,7 +100,7 @@ create table tb_cupom (
 	id_cupom 			int primary key not null auto_increment,
 	ds_cupom 			varchar(30) not null,
 	vl_desconto 		decimal not null,
-	dt_expiracao 		date not null
+	dt_expiracao 		datetime not null
 );
 
 create table tb_cupom_produto (
@@ -131,10 +131,10 @@ create table tb_pedido (
 	vl_preco_total 		numeric not null,
 	id_estado_pedido	int not null,
 	id_tipo_pagamento 	int not null,
-	dt_compra 			date not null,
-	dt_aprovacao 		date not null,
-	dt_saida 			date not null,
-	dt_entrega			date not null,
+	dt_compra 			datetime not null,
+	dt_aprovacao 		datetime not null,
+	dt_saida 			datetime not null,
+	dt_entrega			datetime not null,
 	foreign key (id_cliente) references tb_cliente(id_cliente),
 	foreign key (id_produto) references tb_produto(id_produto),
 	foreign key (id_estado_pedido) references tb_estado_pedido(id_estado_pedido),
