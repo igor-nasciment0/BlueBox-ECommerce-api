@@ -8,10 +8,10 @@ create table tb_admin (
 	id_admin 			int primary key not null auto_increment,
 	ds_nome 			varchar(100) not null,
 	ds_sobrenome 		varchar(100) not null,
-	ds_email 			varchar(100) not null,
+	ds_email 			varchar(100) not null unique,
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
-	ds_cpf 				varchar(100) not null,
+	ds_cpf 				varchar(100) not null unique,
 	img_perfil 			varchar(100)
 );
 
@@ -32,10 +32,10 @@ create table tb_cliente (
 	id_cliente 			int primary key  not null auto_increment,
 	ds_nome 			varchar(100) not null,
 	ds_sobrenome 		varchar(100) not null,
-	ds_email 			varchar(200) not null,
+	ds_email 			varchar(200) not null unique,
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
-	ds_cpf 				varchar(100) not null,
+	ds_cpf 				varchar(100) not null unique,
 	id_endereco 		int not null,
 	dt_nascimento 		date not null,
 	img_perfil 			varchar(500),
@@ -142,7 +142,8 @@ create table tb_pedido (
 );
 
 
--- produto aleatório para testes
+-- testes com dados aleatórios
+       
        
 insert into tb_categoria(ds_categoria)
 	 values ('console');
@@ -152,3 +153,6 @@ insert into tb_marca(ds_marca)
 		
 insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
      values('b', 100, false, 1, 'a', 'a', 1, 1, true, 100, now());
+
+insert into tb_admin (ds_nome, ds_sobrenome, ds_email, ds_senha, ds_telefone, ds_cpf)
+			  values ('igao', 'o maioral', 'igaoreidelas@gmail.com', 'igaokingofhers', '11999', '999');
