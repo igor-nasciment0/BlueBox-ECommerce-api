@@ -37,7 +37,23 @@ export async function deletarProduto(id) {
 
 export async function inserirProduto(produto){
     let sql = `
-        insert into tb_produto(nm_produto, vl_preco)
+        insert into tb_produto(id_produto, nm_produto, vl_preco, vl_promocional, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
+        values(?,?,?,?,?,?,?,?,?,?,?,?)
     `
+    let [resp] = await con.query(sql, [produto.nome,
+                                       produto.preco,
+                                       produto.promocional,
+                                       produto.promocao,
+                                       produto.estoque,
+                                       produto.descricao,
+                                       produto.especificacoes,
+                                       produto.categoria,
+                                       produto.marca,
+                                       produto.usado,
+                                       produto.peso,
+                                       produto.cadastro]);
 
+    produto.id = resp.insertId
+
+    return produto                  
 }
