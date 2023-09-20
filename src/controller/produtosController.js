@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { consultaProduto, deletarProduto } from "../repository/produtosRepository.js";
+import { consultaProduto, deletarProduto, inserirProduto } from "../repository/produtosRepository.js";
 
 const endpoints = Router();
 
@@ -33,6 +33,19 @@ endpoints.delete('/produto/:id', async (req, resp) => {
         resp.status(204).send();
     } catch (error) {
         resp.status(500).send(error.message);
+    }
+})
+
+endpoints.post('/produto', async (req, resp) => {
+    try {
+        let novoProduto = req.body;
+
+        let produtoCadastrado = inserirProduto(novoProduto)
+        resp.send(produtoCadastrado)
+    }
+
+    catch(error){
+        resp.status(500).send(error.message)
     }
 })
 
