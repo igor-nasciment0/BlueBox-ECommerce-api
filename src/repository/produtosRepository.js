@@ -34,3 +34,10 @@ export async function deletarProduto(id) {
     
     return resp;
 }
+
+export async function inserirProduto(produto){
+    let sql = `
+        insert into tb_produto(nm_produto, vl_preco)
+    `
+
+}
