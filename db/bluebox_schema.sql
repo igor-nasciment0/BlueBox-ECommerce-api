@@ -36,7 +36,7 @@ create table tb_cliente (
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
 	ds_cpf 				varchar(100) not null unique,
-	id_endereco 		int not null,
+	id_endereco 		int,
 	dt_nascimento 		date not null,
 	img_perfil 			varchar(500),
 	dt_cadastro 		datetime not null,
