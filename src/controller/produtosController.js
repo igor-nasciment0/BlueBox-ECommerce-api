@@ -12,8 +12,6 @@ endpoints.get('/produto', async (req, resp) => {
 
         let produtos = await consultaProduto(nome);
 
-        console.log(produtos);
-
         resp.send(produtos)
 
     } catch (error) {

@@ -9,15 +9,15 @@ endpoints.post('/adm/login', async (req, resp) => {
 
         let resposta = await loginADM(email, senha);
 
-        if (resposta.length != 1)
+        if (resposta.length !== 1)
         {
             throw new Error('Credenciais inválidas.')
         }
 
-        resp.status(200).send({acesso: true});   
+        resp.status(204).send();   
 
     } catch (error) {
-        resp.status(500).send(error.message)
+        resp.status(400).send(error.message)
     }
 })
 

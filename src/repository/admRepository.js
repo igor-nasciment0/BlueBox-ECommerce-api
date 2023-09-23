@@ -17,7 +17,5 @@ export async function loginADM(email, senha) {
 
     let [resp] = await con.query(sql, [email, senha]);
 
-    console.log(resp);
-
     return resp;
 }
