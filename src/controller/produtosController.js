@@ -48,7 +48,7 @@ endpoints.post('/produto', async (req, resp) => {
 })
 
 
-endpoints.put('/produto/id', async (req, resp) =>{
+endpoints.put('/produto/:id', async (req, resp) =>{
 
     try{
         let id = req.params.id
