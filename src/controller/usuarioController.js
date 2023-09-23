@@ -7,7 +7,7 @@ endpoints.post('/usuario/cadastro', async (req, resp) => {
     try {
         let credenciais = req.body;
 
-        if(!credenciais)
+        if(!credenciais)    
             throw new Error('Não foi possível realizar o cadastro.')
 
         let resposta = await cadastroUsuario(credenciais);

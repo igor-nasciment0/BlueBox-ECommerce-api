@@ -13,7 +13,7 @@ export async function cadastroUsuario(credenciais) {
                                        credenciais.senha,
                                        credenciais.telefone,
                                        credenciais.cpf,
-                                       credenciais.nascimento]);
+                                       credenciais.dataNascimento]);
     
     credenciais.id = resp.insertId;
 

@@ -27,7 +27,7 @@ export async function deletarProduto(id) {
     let sql = 
     `
         delete from tb_produto
-         where id_produto = ?
+        where id_produto = ?
     `
 
     let [resp] = await con.query(sql, [id]);
@@ -71,18 +71,18 @@ export async function alterarProduto(id, produto){
                     dt_cadastro = ?
                     where id_produto = ?`
 
-let [resp] = await con.query(sql, [produto.nome,
-                                   produto.preco,
-                                   produto.estoque,
-                                   produto.descricao,
-                                   produto.especificacoes,
-                                   produto.categoria,
-                                   produto.marca,
-                                   produto.usado,
-                                   produto.peso,
-                                   produto.cadastro,
-                                   id]);
+    let [resp] = await con.query(sql, [produto.nome,
+                                       produto.preco,
+                                       produto.estoque,
+                                       produto.descricao,
+                                       produto.especificacoes,
+                                       produto.categoria,
+                                       produto.marca,
+                                       produto.usado,
+                                       produto.peso,
+                                       produto.cadastro,
+                                       id]);
 
-let linhasAfetadas = resp.affectdRows
-return linhasAfetadas;               
+    let linhasAfetadas = resp.affectdRows
+    return linhasAfetadas;               
 }
