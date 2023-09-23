@@ -55,3 +55,34 @@ export async function inserirProduto(produto){
 
     return produto                  
 }
+
+export async function alterarProduto(id, produto){
+    let sql = `update tb_produto
+                set nm_produto = ?
+                    vl_preco = ?
+                    bt_promocao = ?
+                    qtd_estoque = ?
+                    ds_produto = ?
+                    ds_especificacoes = ?
+                    id_categoria = ?
+                    id_marca = ?
+                    bt_usado = ?
+                    vl_peso = ?
+                    dt_cadastro = ?
+                    where id_produto = ?`
+
+let [resp] = await con.query(sql, [produto.nome,
+                                   produto.preco,
+                                   produto.estoque,
+                                   produto.descricao,
+                                   produto.especificacoes,
+                                   produto.categoria,
+                                   produto.marca,
+                                   produto.usado,
+                                   produto.peso,
+                                   produto.cadastro,
+                                   id]);
+
+let linhasAfetadas = resp.affectdRows
+return linhasAfetadas;               
+}
