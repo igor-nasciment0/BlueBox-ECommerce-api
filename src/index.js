@@ -5,6 +5,7 @@ import cors from 'cors';
 
 import produtosController from './controller/produtosController.js';
 import admController from './controller/admController.js';
+import usuarioController from './controller/clienteController.js';
 
 const server = express(); 
 
@@ -12,5 +13,6 @@ server.use(cors());
 server.use(express.json());
 server.use(produtosController);
 server.use(admController);
+server.use(usuarioController)
 
 server.listen(process.env.PORT, () => console.log('API ONLINE NA PORTA ' + process.env.PORT));

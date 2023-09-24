@@ -1,6 +1,6 @@
-import con from "./conexao"
+import con from "./conexao.js"
 
-export async function cadastroUsuario(credenciais) {
+export async function cadastroCliente(credenciais) {
     let sql = 
     `
         insert into tb_cliente(ds_nome, ds_sobrenome, ds_email, ds_senha, ds_telefone, ds_cpf, dt_nascimento, dt_cadastro)
@@ -20,7 +20,7 @@ export async function cadastroUsuario(credenciais) {
     return credenciais;
 }
 
-export async function loginUsuario(credenciais) {
+export async function loginCliente(credenciais) {
     let sql = 
     `
         select ds_nome          nome,
@@ -41,5 +41,31 @@ export async function loginUsuario(credenciais) {
     let [resp] = await con.query(sql, [credenciais.email,
                                        credenciais.senha]);
     
+    return resp;
+}
+
+export async function verificarEmail(email) {
+    let sql =
+    `
+        select ds_email 
+          from tb_cliente
+         where ds_email = ? 
+    `
+
+    let [resp] = await con.query(sql, [email]);
+
+    return resp;
+}
+
+export async function verificarCPF(cpf) {
+    let sql =
+    `
+        select ds_cpf 
+          from tb_cliente
+         where ds_cpf = ? 
+    `
+
+    let [resp] = await con.query(sql, [cpf]);
+
     return resp;
 }
