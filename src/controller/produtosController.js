@@ -52,7 +52,15 @@ endpoints.put('/produto/:id', async (req, resp) =>{
 
     try{
         let id = req.params.id
-        let produto = req.body
+        let produto = req.body;
+
+        if(!produto) {
+            throw new Error("Não foi possível alterar o produto.");
+        }
+
+        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.usado || !produto.peso) {
+            throw new Error("Preencha todos os campos de registro.")
+        }
     
         let resposta = await alterarProduto(id, produto);
 

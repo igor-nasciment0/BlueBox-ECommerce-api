@@ -5,17 +5,25 @@ export async function consultaProduto(nome) {
 
     let sql = 
     `
-        select id_produto       id,
-               nm_produto       nome,
-               qtd_estoque      estoque,
-               bt_usado         usado,
-               vl_preco         preco
-          from tb_produto
-    inner join tb_categoria     on tb_produto.id_categoria = tb_categoria.id_categoria
-    inner join tb_marca         on tb_produto.id_marca = tb_marca.id_marca
-         where nm_produto       like ?
-            or ds_marca         like ?
-            or ds_categoria     like ?
+        select id_produto           id,
+               nm_produto           nome,
+               qtd_estoque          estoque,
+               bt_usado             usado,
+               vl_preco             preco,
+               bt_promocao          promocao,
+               vl_promocional       valorPromocional,
+               ds_produto           descricao,
+               ds_especificacoes    especificacoes,
+               p.id_categoria       categoria,
+               p.id_marca           marca,
+               vl_peso              peso,
+               dt_cadastro          dataCadastro
+          from tb_produto           as p
+    inner join tb_categoria         on p.id_categoria = tb_categoria.id_categoria
+    inner join tb_marca             on p.id_marca = tb_marca.id_marca
+         where nm_produto           like ?
+            or ds_marca             like ?
+            or ds_categoria         like ?
     `
 
     let [resp] = await con.query(sql, [nome, nome, nome])
@@ -60,7 +68,6 @@ export async function alterarProduto(id, produto){
     let sql = `update tb_produto
                 set nm_produto = ?
                     vl_preco = ?
-                    bt_promocao = ?
                     qtd_estoque = ?
                     ds_produto = ?
                     ds_especificacoes = ?
@@ -68,7 +75,7 @@ export async function alterarProduto(id, produto){
                     id_marca = ?
                     bt_usado = ?
                     vl_peso = ?
-                    dt_cadastro = ?
+                    dt_cadastro = NOW()
                     where id_produto = ?`
 
     let [resp] = await con.query(sql, [produto.nome,
@@ -80,7 +87,6 @@ export async function alterarProduto(id, produto){
                                        produto.marca,
                                        produto.usado,
                                        produto.peso,
-                                       produto.cadastro,
                                        id]);
 
     let linhasAfetadas = resp.affectdRows
