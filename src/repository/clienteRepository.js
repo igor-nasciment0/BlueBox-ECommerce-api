@@ -69,3 +69,15 @@ export async function verificarCPF(cpf) {
 
     return resp;
 }
+
+export function calcularIdade(data)
+{
+    let hoje = new Date();
+    let nascimento = new Date(data);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    let mes = hoje.getMonth() - nascimento.getMonth();
+    if (mes < 0 || (mes === 0 && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+    return idade;
+}
