@@ -56,7 +56,7 @@ endpoints.post('/usuario/login', async (req, resp) => {
         console.log(resposta);
 
         if(resposta.length != 1)
-            throw new Error('Credenciais inválidas');
+            throw new Error('Email ou senha incorretos');
 
         resp.send(resposta)
 
