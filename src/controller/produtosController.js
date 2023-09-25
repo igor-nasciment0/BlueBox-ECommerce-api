@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { consultaProduto, deletarProduto, inserirProduto, alterarProduto } from "../repository/produtosRepository.js";
+import { consultaProduto, deletarProduto, inserirProduto, alterarProduto, listarCategorias, listarMarcas } from "../repository/produtosRepository.js";
 
 const endpoints = Router();
 
@@ -36,9 +36,17 @@ endpoints.delete('/produto/:id', async (req, resp) => {
 
 endpoints.post('/produto', async (req, resp) => {
     try {
-        let novoProduto = req.body;
+        let produto = req.body;
 
-        let produtoCadastrado = inserirProduto(novoProduto)
+        if(!produto) {
+            throw new Error("Não foi possível alterar o produto.");
+        }
+
+        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.usado || !produto.peso) {
+            throw new Error("Preencha todos os campos de registro.")
+        }
+
+        let produtoCadastrado = inserirProduto(produto)
         resp.send(produtoCadastrado)
     }
 
@@ -58,11 +66,15 @@ endpoints.put('/produto/:id', async (req, resp) =>{
             throw new Error("Não foi possível alterar o produto.");
         }
 
+        console.log(produto);
+
         if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.usado || !produto.peso) {
             throw new Error("Preencha todos os campos de registro.")
         }
     
         let resposta = await alterarProduto(id, produto);
+
+        console.log(resposta);
 
         if(resposta !== 1) {
             throw new Error("Não foi possível alterar o produto.")
@@ -72,6 +84,28 @@ endpoints.put('/produto/:id', async (req, resp) =>{
     }
 
     catch(error){
+        resp.status(500).send(error.message)
+    }
+})
+
+endpoints.get('/produto/categoria', async (req, resp) => {
+    try {
+        let categorias = await listarCategorias();
+        
+        resp.send(categorias);
+
+    } catch (error) {
+        resp.status(500).send(error.message)
+    }
+})
+
+endpoints.get('/produto/marca', async (req, resp) => {
+    try {
+        let marcas = await listarMarcas();
+        
+        resp.send(marcas);
+
+    } catch (error) {
         resp.status(500).send(error.message)
     }
 })

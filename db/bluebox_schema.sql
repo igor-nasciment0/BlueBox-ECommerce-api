@@ -146,10 +146,19 @@ create table tb_pedido (
        
        
 insert into tb_categoria(ds_categoria)
-	 values ('console');
+	 values ('Console'),
+	 		('Action Figure'),
+			('Jogo para PC'),
+			('Jogo para Xbox'),
+			('Jogo para Playstation'),
+			('Jogo para Nintendo');
 
 insert into tb_marca(ds_marca)
-	 values ('nintendo');
+	 values ('Microsoft'),
+	 		('Sony'),
+			('Nintendo'),
+			('Bandai Namco');
+
 		
 insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
      values('b', 100, false, 1, 'a', 'a', 1, 1, true, 100, now());

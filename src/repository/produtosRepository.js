@@ -46,7 +46,7 @@ export async function deletarProduto(id) {
 export async function inserirProduto(produto){
     let sql = `
         insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
-        values(?, ?, false, ?, ?, ?, ?, ?, ?, ?, ?)
+        values(?, ?, false, ?, ?, ?, ?, ?, ?, ?, NOW())
     `
     let [resp] = await con.query(sql, [produto.nome,
                                        produto.preco,
@@ -66,17 +66,17 @@ export async function inserirProduto(produto){
 
 export async function alterarProduto(id, produto){
     let sql = `update tb_produto
-                set nm_produto = ?
-                    vl_preco = ?
-                    qtd_estoque = ?
-                    ds_produto = ?
-                    ds_especificacoes = ?
-                    id_categoria = ?
-                    id_marca = ?
-                    bt_usado = ?
-                    vl_peso = ?
-                    dt_cadastro = NOW()
-                    where id_produto = ?`
+                  set nm_produto = ?,
+                      vl_preco = ?,
+                      qtd_estoque = ?,
+                      ds_produto = ?,
+                      ds_especificacoes = ?,
+                      id_categoria = ?,
+                      id_marca = ?,
+                      bt_usado = ?,
+                      vl_peso = ?,
+                      dt_cadastro = NOW()
+                      where id_produto = ?`
 
     let [resp] = await con.query(sql, [produto.nome,
                                        produto.preco,
@@ -89,6 +89,32 @@ export async function alterarProduto(id, produto){
                                        produto.peso,
                                        id]);
 
-    let linhasAfetadas = resp.affectdRows
+    let linhasAfetadas = resp.affectedRows
     return linhasAfetadas;               
+}
+
+export async function listarCategorias() {
+    let sql = 
+    `
+        select id_categoria     id,
+               ds_categoria     categoria
+          from tb_categoria
+    `
+
+    let [resp] = await con.query(sql, []);
+
+    return resp;
+}
+
+export async function listarMarcas() {
+    let sql = 
+    `
+        select id_marca     id,
+               ds_marca     marca
+          from tb_marca
+    `
+
+    let [resp] = await con.query(sql);
+
+    return resp;
 }
