@@ -93,6 +93,18 @@ export async function alterarProduto(id, produto){
     return linhasAfetadas;               
 }
 
+export async function inserirImagem(idProduto, imagem, primaria) {
+    let sql = 
+    `
+        insert into tb_produto_imagem (id_produto, ds_imagem_url, bt_img_primaria)
+                               values (?, ?, ?);
+    `
+
+    let [resp] = await con.query(sql, [idProduto, imagem, primaria]);
+
+    return resp.affectedRows;
+}
+
 export async function listarCategorias() {
     let sql = 
     `

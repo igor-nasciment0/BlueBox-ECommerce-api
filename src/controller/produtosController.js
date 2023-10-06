@@ -1,7 +1,10 @@
 import { Router } from "express";
-import { consultaProduto, deletarProduto, inserirProduto, alterarProduto, listarCategorias, listarMarcas } from "../repository/produtosRepository.js";
+import multer from 'multer';
+import { consultaProduto, deletarProduto, inserirProduto, alterarProduto, listarCategorias, listarMarcas, inserirImagem } from "../repository/produtosRepository.js";
 
 const endpoints = Router();
+
+const upload = multer({dest: 'storage/imagensProdutos'})
 
 endpoints.get('/produto', async (req, resp) => {
     try {
@@ -52,6 +55,24 @@ endpoints.post('/produto', async (req, resp) => {
 
     catch(error){
         resp.status(500).send(error.message)
+    }
+})
+
+endpoints.post('/produto/:id/imagem', upload.single('imagem'), async(req, resp) => {
+    try {
+        let primaria = Boolean(req.query.primaria);
+        let {id} = req.params;
+        let imagem = req.file.path;
+
+        let resposta = await inserirImagem(id, imagem, primaria);
+        
+        if(resposta != 1) {
+            throw new Error('Não foi possível inserir a imagem.')
+        }
+
+        resp.status(204).send();
+    } catch (error) {
+        resp.status(400).send(error.message);
     }
 })
 
