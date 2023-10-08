@@ -59,9 +59,9 @@ export async function inserirProduto(produto){
                                        produto.peso,
                                        produto.cadastro]);
 
-    produto.id = resp.insertId
+    produto.id = resp.insertId;
 
-    return produto                  
+    return produto;              
 }
 
 export async function alterarProduto(id, produto){

@@ -45,12 +45,12 @@ endpoints.post('/produto', async (req, resp) => {
             throw new Error("Não foi possível alterar o produto.");
         }
 
-        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.usado || !produto.peso) {
+        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.peso) {
             throw new Error("Preencha todos os campos de registro.")
         }
 
-        let produtoCadastrado = inserirProduto(produto)
-        resp.send(produtoCadastrado)
+        let produtoCadastrado = await inserirProduto(produto)
+        resp.send(produtoCadastrado);
     }
 
     catch(error){
@@ -58,9 +58,12 @@ endpoints.post('/produto', async (req, resp) => {
     }
 })
 
-endpoints.post('/produto/:id/imagem', upload.single('imagem'), async(req, resp) => {
+endpoints.post('/produto/:id/imagem', upload.single('imagem'), async (req, resp) => {
     try {
-        let primaria = Boolean(req.query.primaria);
+        if(!req.file.path)
+            throw new Error('Não foi possível adicionar a imagem');
+
+        let primaria = req.query.primaria === 'true';
         let {id} = req.params;
         let imagem = req.file.path;
 
@@ -71,6 +74,7 @@ endpoints.post('/produto/:id/imagem', upload.single('imagem'), async(req, resp) 
         }
 
         resp.status(204).send();
+
     } catch (error) {
         resp.status(400).send(error.message);
     }
@@ -78,7 +82,6 @@ endpoints.post('/produto/:id/imagem', upload.single('imagem'), async(req, resp) 
 
 
 endpoints.put('/produto/:id', async (req, resp) =>{
-
     try{
         let id = req.params.id
         let produto = req.body;
@@ -89,13 +92,11 @@ endpoints.put('/produto/:id', async (req, resp) =>{
 
         console.log(produto);
 
-        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.usado || !produto.peso) {
+        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.peso) {
             throw new Error("Preencha todos os campos de registro.")
         }
     
         let resposta = await alterarProduto(id, produto);
-
-        console.log(resposta);
 
         if(resposta !== 1) {
             throw new Error("Não foi possível alterar o produto.")
