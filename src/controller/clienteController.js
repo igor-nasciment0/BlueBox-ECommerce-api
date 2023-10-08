@@ -61,6 +61,7 @@ endpoints.post('/usuario/login', async (req, resp) => {
         resp.send(resposta)
 
     } catch (error) {
+        console.log(error);
         resp.status(400).send(error.message);
     }
 })

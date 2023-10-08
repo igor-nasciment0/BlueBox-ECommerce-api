@@ -26,7 +26,6 @@ export async function loginCliente(credenciais) {
         select ds_nome          nome,
                ds_sobrenome     sobrenome,
                ds_email         email,
-               ds_senha         senha,
                ds_telefone      telefone,
                ds_cpf           cpf,
                id_endereco,
