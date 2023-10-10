@@ -14,7 +14,7 @@ endpoints.post('/adm/login', async (req, resp) => {
             throw new Error('Credenciais inválidas.')
         }
 
-        resp.status(204).send();   
+        resp.send(resposta);   
 
     } catch (error) {
         resp.status(400).send(error.message)
