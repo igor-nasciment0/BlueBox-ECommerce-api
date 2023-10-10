@@ -14,6 +14,7 @@ server.use(express.json());
 
 server.use(produtosController);
 server.use('/storage/imagens-produtos', express.static('storage/imagens-produtos'))
+server.use('/storage/imagens-usuarios', express.static('storage/imagens-usuarios'))
 
 server.use(admController);
 server.use(usuarioController)

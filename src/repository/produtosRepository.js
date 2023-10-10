@@ -109,7 +109,7 @@ export async function buscarImagens(idProduto) {
     return resp;
 }
 
-export async function inserirImagem(idProduto, imagem, primaria) {
+export async function inserirImagemProduto(idProduto, imagem, primaria) {
     let sql = 
     `
         insert into tb_produto_imagem (id_produto, ds_imagem_url, bt_img_primaria)

@@ -1,7 +1,10 @@
 import Router from "express";
-import { cadastroCliente, calcularIdade, loginCliente, verificarCPF, verificarEmail } from "../repository/clienteRepository.js";
+import { cadastroCliente, calcularIdade, inserirImagemUsuario, loginCliente, verificarCPF, verificarEmail } from "../repository/clienteRepository.js";
+import multer from "multer";
 
 const endpoints = Router();
+
+const upload = multer({dest: 'storage/imagens-usuarios'});
 
 endpoints.post('/usuario/cadastro', async (req, resp) => {
     try {
@@ -63,6 +66,23 @@ endpoints.post('/usuario/login', async (req, resp) => {
     } catch (error) {
         console.log(error);
         resp.status(400).send(error.message);
+    }
+})
+
+endpoints.put('/usuario/:id/imagem', upload.single('imagem'), async (req, resp) => {
+    try {
+        let idUsuario = req.params.id;
+        let imagem = req.file.path;
+
+        let linhasAfetadas = await inserirImagemUsuario(idUsuario, imagem)
+
+        if(linhasAfetadas !== 1)
+            throw new Error('Não foi possível adicionar a imagem.')
+
+        resp.status(204).send();
+
+    } catch (error) {
+        resp.status(500).send();
     }
 })
 

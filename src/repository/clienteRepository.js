@@ -23,14 +23,15 @@ export async function cadastroCliente(credenciais) {
 export async function loginCliente(credenciais) {
     let sql = 
     `
-        select ds_nome          nome,
+        select id_cliente       id,
+               ds_nome          nome,
                ds_sobrenome     sobrenome,
                ds_email         email,
                ds_telefone      telefone,
                ds_cpf           cpf,
-               id_endereco,
+               id_endereco      idEndereco,
                dt_nascimento    dataNascimento,
-               img_perfil,
+               img_perfil       imgPerfil,
                dt_cadastro      dataCadastro
           from tb_cliente
          where ds_email         = ?
@@ -67,6 +68,19 @@ export async function verificarCPF(cpf) {
     let [resp] = await con.query(sql, [cpf]);
 
     return resp;
+}
+
+export async function inserirImagemUsuario(idCliente, imagem) {
+    let sql = 
+    `
+        update tb_cliente
+           set img_perfil = ?
+         where id_cliente = ?
+    `
+
+    let [resp] = await con.query(sql, [imagem, idCliente]);
+
+    return resp.affectedRows;
 }
 
 export function calcularIdade(data)
