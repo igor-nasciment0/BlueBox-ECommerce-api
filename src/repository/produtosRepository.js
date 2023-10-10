@@ -93,6 +93,22 @@ export async function alterarProduto(id, produto){
     return linhasAfetadas;               
 }
 
+export async function buscarImagens(idProduto) {
+    let sql = 
+    `
+        select id_produto_imagem    id,
+               id_produto           idProduto,
+               ds_imagem_url        url,
+               bt_img_primaria      primaria
+          from tb_produto_imagem
+         where id_produto =         ?
+    `
+
+    let [resp] = await con.query(sql, [idProduto]);
+
+    return resp;
+}
+
 export async function inserirImagem(idProduto, imagem, primaria) {
     let sql = 
     `
@@ -104,6 +120,20 @@ export async function inserirImagem(idProduto, imagem, primaria) {
 
     return resp.affectedRows;
 }
+
+export async function deletarImagem(id) {
+    let sql = 
+    `
+        delete from     tb_produto_imagem
+              where     id_produto_imagem = ?
+    `
+
+    let [resp] = await con.query(sql, [id]);
+
+    return resp.affectedRows;
+}
+
+
 
 export async function listarCategorias() {
     let sql = 

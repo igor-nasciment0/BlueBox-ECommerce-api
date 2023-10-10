@@ -11,7 +11,10 @@ const server = express();
 
 server.use(cors());
 server.use(express.json());
+
 server.use(produtosController);
+server.use('/storage/imagens-produtos', express.static('storage/imagens-produtos'))
+
 server.use(admController);
 server.use(usuarioController)
 

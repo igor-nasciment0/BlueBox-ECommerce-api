@@ -1,10 +1,10 @@
 import { Router } from "express";
 import multer from 'multer';
-import { consultaProduto, deletarProduto, inserirProduto, alterarProduto, listarCategorias, listarMarcas, inserirImagem } from "../repository/produtosRepository.js";
+import { consultaProduto, deletarProduto, inserirProduto, alterarProduto, listarCategorias, listarMarcas, inserirImagem, deletarImagem, buscarImagens } from "../repository/produtosRepository.js";
 
 const endpoints = Router();
 
-const upload = multer({dest: 'storage/imagensProdutos'})
+const upload = multer({dest: 'storage/imagens-produtos'})
 
 endpoints.get('/produto', async (req, resp) => {
     try {
@@ -58,6 +58,51 @@ endpoints.post('/produto', async (req, resp) => {
     }
 })
 
+endpoints.put('/produto/:id', async (req, resp) =>{
+    try{
+        let id = req.params.id
+        let produto = req.body;
+
+        if(!produto) {
+            throw new Error("Não foi possível alterar o produto.");
+        }
+
+        console.log(produto);
+
+        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.peso) {
+            throw new Error("Preencha todos os campos de registro.")
+        }
+    
+        let resposta = await alterarProduto(id, produto);
+
+        if(resposta !== 1) {
+            throw new Error("Não foi possível alterar o produto.")
+        }    
+
+        resp.send(produto);
+    }
+
+    catch(error){
+        resp.status(500).send(error.message)
+    }
+})
+
+
+///// CONTROLE DE IMAGENS DOS PRODUTOS
+
+endpoints.get('/produto/:id/imagem', async (req, resp) => {
+    try {
+        let idProduto = req.params.id;
+
+        let imagens = await buscarImagens(idProduto);
+
+        resp.send(imagens);
+        
+    } catch (error) {
+        resp.status(500).send(error.message);
+    }
+})
+
 endpoints.post('/produto/:id/imagem', upload.single('imagem'), async (req, resp) => {
     try {
         if(!req.file.path)
@@ -80,35 +125,25 @@ endpoints.post('/produto/:id/imagem', upload.single('imagem'), async (req, resp)
     }
 })
 
+endpoints.delete('/produto/imagem/:id', async (req, resp) => {
+    try {
+        let {id} = req.params;
+        
+        let linhasAfetadas = await deletarImagem(id);
 
-endpoints.put('/produto/:id', async (req, resp) =>{
-    try{
-        let id = req.params.id
-        let produto = req.body;
-
-        if(!produto) {
-            throw new Error("Não foi possível alterar o produto.");
-        }
-
-        console.log(produto);
-
-        if(!produto.nome || !produto.preco || !produto.estoque || !produto.descricao || !produto.especificacoes || !produto.categoria || !produto.marca || !produto.peso) {
-            throw new Error("Preencha todos os campos de registro.")
-        }
-    
-        let resposta = await alterarProduto(id, produto);
-
-        if(resposta !== 1) {
-            throw new Error("Não foi possível alterar o produto.")
-        }    
-
-        resp.status(204).send()
-    }
-
-    catch(error){
-        resp.status(500).send(error.message)
+        if(linhasAfetadas !== 1)
+            throw new Error('Não foi possível deletar a imagem.');
+        
+        resp.status(204).send();
+            
+    } catch (error) {
+        resp.status(500).send(error.message);
     }
 })
+
+
+
+///// GET MARCAS E CATEGORIAS
 
 endpoints.get('/produto/categoria', async (req, resp) => {
     try {
