@@ -61,10 +61,10 @@ create table tb_marca (
 create table tb_produto (
 	id_produto 			int primary key not null auto_increment,
 	nm_produto 			varchar(300) not null,
-	vl_preco 			numeric not null,
-	vl_promocional		numeric,
+	vl_preco 			decimal(10, 2) not null,
+	vl_promocional		decimal(10, 2),
 	bt_promocao 		boolean not null,
-	qtd_estoque 		numeric not null,
+	qtd_estoque 		int not null,
 	ds_produto 			varchar(800) not null,
 	ds_especificacoes 	varchar(400) not null,
 	id_categoria 		int not null,
@@ -89,7 +89,7 @@ create table tb_comentario (
 	id_produto 			int not null,
 	id_cliente 			int not null,
 	ds_comentario 		varchar(500) not null,
-	ds_nota 			numeric not null,
+	ds_nota 			int not null,
 	dt_postagem 		datetime not null,
 	nr_likes 			int not null,
 	foreign key (id_produto) references tb_produto(id_produto),
@@ -99,7 +99,7 @@ create table tb_comentario (
 create table tb_cupom (
 	id_cupom 			int primary key not null auto_increment,
 	ds_cupom 			varchar(30) not null,
-	vl_desconto 		decimal not null,
+	vl_desconto 		decimal(3, 2) not null,
 	dt_expiracao 		datetime not null
 );
 
@@ -128,7 +128,7 @@ create table tb_pedido (
 	id_pedido 			int primary key not null auto_increment,
 	id_cliente 			int not null,
 	id_produto 			int not null,
-	vl_preco_total 		numeric not null,
+	vl_preco_total 		decimal(10, 2) not null,
 	id_estado_pedido	int not null,
 	id_tipo_pagamento 	int not null,
 	dt_compra 			datetime not null,
