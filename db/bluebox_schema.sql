@@ -161,7 +161,7 @@ insert into tb_marca(ds_marca)
 
 		
 insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
-     values('b', 100, false, 1, 'a', 'a', 1, 1, true, 100, now());
+     values('The Legend of Zelda: Breath of the Wild', 45.50, true, 50, 'Explore horas de diversão com "The Legend of Zelda: Breath of the Wild", uma experiência emocionante para jogadores de todas as idades. Este jogo de ação e aventura oferece uma jogabilidade envolvente, gráficos deslumbrantes e uma narrativa cativante que o manterá imerso do início ao fim.', 'a', 1, 1, true, 100, now());
 
 insert into tb_admin (ds_nome, ds_sobrenome, ds_email, ds_senha, ds_telefone, ds_cpf)
 			  values ('igao', 'o maioral', 'igaoreidelas@gmail.com', 'igaokingofhers', '11999', '999');

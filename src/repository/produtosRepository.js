@@ -34,7 +34,7 @@ export async function consultaProduto(nome) {
 export async function consultaProdutoPorid(id){
     let sql = `
         select id_produto           id,
-               nm_produto           produto,
+               nm_produto           nome,
                qtd_estoque          estoque,
                bt_usado             usado,
                vl_preco             preco,
