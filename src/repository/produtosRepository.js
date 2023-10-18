@@ -33,24 +33,27 @@ export async function consultaProduto(nome) {
 
 export async function consultaProdutoPorid(id){
     let sql = `
-        select id_produto           id
-               nm_produto           produto
-               qtd_estoque          estoque
-               bt_usado             usado
+        select id_produto           id,
+               nm_produto           produto,
+               qtd_estoque          estoque,
+               bt_usado             usado,
                vl_preco             preco,
                bt_promocao          promocao,
                vl_promocional       valorPromocional,
                ds_produto           descricao,
                ds_especificacoes    especificacoes,
-               p.id_categoria       categoria,
-               p.id_marca           marca,
+               ds_categoria         categoria,
+               ds_marca             marca,
                vl_peso              peso,
                dt_cadastro          dataCadastro
-               from tb_cadastro where id_produto = ?
+          from tb_produto           as p
+    inner join tb_categoria         on p.id_categoria = tb_categoria.id_categoria
+    inner join tb_marca             on p.id_marca = tb_marca.id_marca 
+         where id_produto           = ?
     `
 
-    let [dados] = await con.query( sql, [id])
-    return dados
+    let [produto] = await con.query(sql, [id])
+    return produto[0];
 }
 
 export async function deletarProduto(id) {
