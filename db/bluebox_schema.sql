@@ -102,7 +102,7 @@ create table tb_avaliacao_like(
 	id_cliente			int not null,
 	foreign key (id_avaliacao) references tb_avaliacao(id_avaliacao),
 	foreign key (id_cliente) references tb_cliente(id_cliente)
-)
+);
 
 create table tb_cupom (
 	id_cupom 			int primary key not null auto_increment,

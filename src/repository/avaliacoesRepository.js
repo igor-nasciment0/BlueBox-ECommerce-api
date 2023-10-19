@@ -20,17 +20,19 @@ export async function buscarAvaliacoes(idProduto) {
     return resp;
 }
 
-export async function inserirAvaliacao(avaliacao) {
+export async function inserirAvaliacao(idProduto, avaliacao) {
     let sql = 
     `
         insert into tb_avaliacao (id_produto, id_cliente, ds_comentario, ds_nota, dt_postagem, nr_likes)
                           values (?, ?, ?, ?, NOW(), 0);
     `
 
-    let [resp] = await con.query(sql, [avaliacao.idProduto,
+    let [resp] = await con.query(sql, [idProduto,
                                  avaliacao.idCliente,
                                  avaliacao.comentario,
                                  avaliacao.nota])
+
+    console.log(resp);
     
     avaliacao.id = resp.insertId;
 
