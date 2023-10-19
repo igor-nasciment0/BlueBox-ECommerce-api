@@ -8,11 +8,11 @@ create table tb_admin (
 	id_admin 			int primary key not null auto_increment,
 	ds_nome 			varchar(100) not null,
 	ds_sobrenome 		varchar(100) not null,
-	ds_email 			varchar(100) not null unique,
+	ds_email 			varchar(200) not null unique,
 	ds_senha 			varchar(100) not null,
 	ds_telefone 		varchar(100) not null,
 	ds_cpf 				varchar(100) not null unique,
-	img_perfil 			varchar(100)
+	img_perfil 			varchar(500)
 );
 
 
@@ -84,8 +84,8 @@ create table tb_produto_imagem (
 	foreign key (id_produto) references tb_produto(id_produto)
 );
 
-create table tb_comentario (
-	id_comentario 		int primary key not null auto_increment,
+create table tb_avaliacao (
+	id_avaliacao 		int primary key not null auto_increment,
 	id_produto 			int not null,
 	id_cliente 			int not null,
 	ds_comentario 		varchar(500) not null,
@@ -95,6 +95,14 @@ create table tb_comentario (
 	foreign key (id_produto) references tb_produto(id_produto),
 	foreign key (id_cliente) references tb_cliente(id_cliente)
 );
+
+create table tb_avaliacao_like(
+	id_avaliacao_like	int primary key not null auto_increment,
+	id_avaliacao		int not null,
+	id_cliente			int not null,
+	foreign key (id_avaliacao) references tb_avaliacao(id_avaliacao),
+	foreign key (id_cliente) references tb_cliente(id_cliente)
+)
 
 create table tb_cupom (
 	id_cupom 			int primary key not null auto_increment,

@@ -10,9 +10,13 @@ let dados = {
         if (field.type === 'TINY' && field.length === 1) {
             return field.string() === '1'
         }
+        else if (field.type === 'NEWDECIMAL'){
+            return Number(field.string());
+        } 
         else {
             return next();
         }
+
     }
 }
 
