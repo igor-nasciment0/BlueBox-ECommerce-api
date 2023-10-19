@@ -21,6 +21,9 @@ endpoints.post('/produto/:id/avaliacao', async (req, resp) => {
         let idProduto = req.params.id;
         let avaliacao = req.body;
 
+        if(avaliacao.nota < 0 || avaliacao.nota > 5)
+            throw new Error('Nota inválida');
+
         let r = await inserirAvaliacao(idProduto, avaliacao);
 
         resp.send(r);

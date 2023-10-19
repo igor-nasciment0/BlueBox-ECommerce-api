@@ -3,16 +3,22 @@ import con from "./conexao.js"
 export async function buscarAvaliacoes(idProduto) {
     let sql = 
     `
-        select id_avaliacao     id,
+       select  id_avaliacao     id,
                id_produto       idProduto,
-               id_cliente       idCliente,
                ds_comentario    comentario,
                ds_nota          nota,
                dt_postagem      dataPostagem,
-               nr_likes         likes
-         from  tb_avaliacao
+               nr_likes         likes,
+               a.id_cliente     idCliente,
+               ds_nome          nomeCliente,
+               ds_sobrenome     sobrenomeCliente,
+               img_perfil       imgCliente
+         from  tb_avaliacao     as a
+   inner join  tb_cliente       on a.id_cliente = tb_cliente.id_cliente
         where  id_produto       = ?
-     order by  nr_likes, dt_postagem desc   
+     order by  nr_likes, 
+               ds_comentario, 
+               dt_postagem desc   
     `
 
     let [resp] = await con.query(sql, [idProduto]);
