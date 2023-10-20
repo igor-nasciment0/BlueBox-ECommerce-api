@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { buscarAvaliacoes, inserirAvaliacao } from "../repository/avaliacoesRepository.js";
+import { buscarAvaliacoes, darLike, inserirAvaliacao, tirarLike, verificarLike } from "../repository/avaliacoesRepository.js";
 
 const endpoints = Router();
 
@@ -33,16 +33,43 @@ endpoints.post('/produto/:id/avaliacao', async (req, resp) => {
     }
 })
 
-endpoints.post('/produto/:id/avaliacao/like', async (req, resp) => {
+endpoints.get('/produto/avaliacao/:id/like', async (req, resp) => {
     try {
+        let idAvaliacao = req.params.id;
+        let idCliente = req.body.idCliente;
+        
+        let r = await verificarLike(idCliente, idAvaliacao);
+
+        resp.send({like: r.length !== 0})
+
+    } catch (error) {
+        resp.status(500).send(error.message);
+    }
+})
+
+endpoints.post('/produto/avaliacao/:id/like', async (req, resp) => {
+    try {
+        let idAvaliacao = req.params.id;
+        let idCliente = req.body.idCliente;
+        
+        await darLike(idCliente, idAvaliacao);
+
+        resp.status(204).send();
         
     } catch (error) {
         resp.status(500).send(error.message);
     }
 })
 
-endpoints.delete('/produto/:id/avaliacao/like', async (req, resp) => {
-    try {
+endpoints.delete('/produto/avaliacao/:id/like', async (req, resp) => {
+    try {   
+
+        let idAvaliacao = req.params.id;
+        let idCliente = req.body.idCliente;
+        
+        await tirarLike(idCliente, idAvaliacao);
+
+        resp.status(204).send();
         
     } catch (error) {
         resp.status(500).send(error.message);

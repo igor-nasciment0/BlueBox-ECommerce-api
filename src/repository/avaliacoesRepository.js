@@ -53,14 +53,30 @@ export async function darLike(idAvaliacao, idCliente) {
     return resp.affectedRows;
 }
 
-export async function tirarLike(idAvaliacaoLike) {
+export async function tirarLike(idCliente, idAvaliacao) {
     let sql = 
     `
         delete from     tb_avaliacao_like 
-              where     id_avaliacao_like = ?
+              where     id_cliente = ?
+                and     id_avaliacao = ?
     `
 
-    let [resp] = await con.query(sql, [idAvaliacaoLike]);
+    let [resp] = await con.query(sql, [idCliente, idAvaliacao]);
 
     return resp.affectedRows;
+}
+
+export async function verificarLike(idCliente, idAvaliacao) {
+    let sql = 
+    `
+        select id_cliente           idCliente,
+               id_avaliacao         idAvaliacao
+          from tb_avaliacao_like
+               where                id_cliente = ?
+               and                  id_avaliacao = ?
+    `
+
+    let [resp] = await con.query(sql, [idCliente, idAvaliacao]);
+
+    return resp[0];
 }
