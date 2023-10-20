@@ -91,7 +91,6 @@ create table tb_avaliacao (
 	ds_comentario 		varchar(500) not null,
 	ds_nota 			int not null,
 	dt_postagem 		datetime not null,
-	nr_likes 			int not null,
 	foreign key (id_produto) references tb_produto(id_produto),
 	foreign key (id_cliente) references tb_cliente(id_cliente)
 );
@@ -168,8 +167,15 @@ insert into tb_marca(ds_marca)
 			('Bandai Namco');
 
 		
-insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
-     values('The Legend of Zelda: Breath of the Wild', 45.50, true, 50, 'Explore horas de diversão com "The Legend of Zelda: Breath of the Wild", uma experiência emocionante para jogadores de todas as idades. Este jogo de ação e aventura oferece uma jogabilidade envolvente, gráficos deslumbrantes e uma narrativa cativante que o manterá imerso do início ao fim.', 'a', 1, 1, true, 100, now());
+insert into tb_produto(nm_produto, vl_preco, vl_promocional, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
+     			values('The Legend of Zelda: Breath of the Wild', '50.50', '37.45', 1, '50', 'Explore horas de diversão com \"The Legend of Zelda: Breath of the Wild\", uma experiência emocionante para jogadores de todas as idades. Este jogo de ação e aventura oferece uma jogabilidade envolvente, gráficos deslumbrantes e uma narrativa cativante que o manterá imerso do início ao fim.\n\nEste jogo \"The Legend of Zelda: Breath of the Wild\" é um tesouro para qualquer fã da série Zelda ou jogador de Nintendo Switch. Aproveite a oportunidade de explorar o vasto mundo de Hyrule, resolver quebra-cabeças desafiadores e enfrentar inimigos formidáveis. Nossos jogos usados passam por uma rigorosa verificação de qualidade para garantir uma experiência de jogo excepcional.\n\nDescubra a diversão e a emoção de \"The Legend of Zelda: Breath of the Wild\" com a qualidade confiável da BlueBox. Encomende agora e desfrute de uma jornada épica pelo reino de Hyrule!', 'Plataforma: Nintendo Switch\nCondição: Usado - Excelente\nAno de Lançamento: 2017\nIdioma: Inglês (também disponível em outros idiomas)\nClassificação Etária: 10+\nConteúdo Incluso: Cartucho do jogo, caixa original e manual de instruções', 6, 3, 1, 250, '2023-10-19 21:51:40');
+
+insert into tb_produto_imagem(id_produto, ds_imagem_url, bt_img_primaria)
+	 				   values (1, 'storage\\imagens-produtos\\475a5e896c0523636f10925249d8cb60', 1),
+					   		  (1, 'storage\\imagens-produtos\\9c689f57633a3009f0efd35289562d01', 0);
+
+insert into tb_cliente(ds_nome, ds_sobrenome, ds_email, ds_senha, ds_telefone, ds_cpf, id_endereco, dt_nascimento, img_perfil, dt_cadastro)
+				values('Igor', 'Nascimento', 'nascimentoigor1311@gmail.com', 'igor5432', '+55 (11) 99856-4237', '523.177.748-00', NULL, '2005-11-13', NULL, '2023-10-19 22:00:50');
 
 insert into tb_admin (ds_nome, ds_sobrenome, ds_email, ds_senha, ds_telefone, ds_cpf)
 			  values ('igao', 'o maioral', 'igaoreidelas@gmail.com', 'igaokingofhers', '11999', '999');
