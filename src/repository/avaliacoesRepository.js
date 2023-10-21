@@ -41,7 +41,7 @@ export async function inserirAvaliacao(idProduto, avaliacao) {
     return avaliacao;
 }
 
-export async function darLike(idAvaliacao, idCliente) {
+export async function darLike(idCliente, idAvaliacao) {
     let sql = 
     `
         insert into tb_avaliacao_like (id_avaliacao, id_cliente)
@@ -50,7 +50,7 @@ export async function darLike(idAvaliacao, idCliente) {
 
     let [resp] = await con.query(sql, [idAvaliacao, idCliente]);
 
-    return resp.affectedRows;
+    return resp;
 }
 
 export async function tirarLike(idCliente, idAvaliacao) {
@@ -78,5 +78,19 @@ export async function verificarLike(idCliente, idAvaliacao) {
 
     let [resp] = await con.query(sql, [idCliente, idAvaliacao]);
 
-    return resp[0];
+    return resp;
+}
+
+export async function numeroLikes(idAvaliacao) {
+    let sql = 
+    `
+        select id_cliente           idCliente,
+               id_avaliacao         idAvaliacao
+          from tb_avaliacao_like
+               where                id_avaliacao = ?
+    `
+
+    let [resp] = await con.query(sql, [idAvaliacao]);
+
+    return resp;
 }

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { buscarAvaliacoes, darLike, inserirAvaliacao, tirarLike, verificarLike } from "../repository/avaliacoesRepository.js";
+import { buscarAvaliacoes, darLike, inserirAvaliacao, numeroLikes, tirarLike, verificarLike } from "../repository/avaliacoesRepository.js";
 
-const endpoints = Router();
+const endpoints = Router({strict: true});
 
 endpoints.get('/produto/:id/avaliacao', async (req, resp) => {
     try {
@@ -33,6 +33,18 @@ endpoints.post('/produto/:id/avaliacao', async (req, resp) => {
     }
 })
 
+endpoints.get('/produto/avaliacao/:id/numerolikes', async (req, resp) => {
+    try {
+        let idAvaliacao = req.params.id;
+        let r = await numeroLikes(idAvaliacao);
+
+        resp.send({numeroLikes: r.length});
+        
+    } catch (error) {
+        resp.status(500).send(error.message);
+    }
+})
+
 endpoints.get('/produto/avaliacao/:id/like', async (req, resp) => {
     try {
         let idAvaliacao = req.params.id;
@@ -40,8 +52,8 @@ endpoints.get('/produto/avaliacao/:id/like', async (req, resp) => {
         
         let r = await verificarLike(idCliente, idAvaliacao);
 
-        resp.send({like: r.length !== 0})
-
+        resp.send({deuLike: r.length > 0});
+        
     } catch (error) {
         resp.status(500).send(error.message);
     }
