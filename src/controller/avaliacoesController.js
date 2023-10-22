@@ -48,7 +48,7 @@ endpoints.get('/produto/avaliacao/:id/numerolikes', async (req, resp) => {
 endpoints.get('/produto/avaliacao/:id/like', async (req, resp) => {
     try {
         let idAvaliacao = req.params.id;
-        let idCliente = req.body.idCliente;
+        let idCliente = req.query.cliente;
         
         let r = await verificarLike(idCliente, idAvaliacao);
 
@@ -62,7 +62,7 @@ endpoints.get('/produto/avaliacao/:id/like', async (req, resp) => {
 endpoints.post('/produto/avaliacao/:id/like', async (req, resp) => {
     try {
         let idAvaliacao = req.params.id;
-        let idCliente = req.body.idCliente;
+        let idCliente = req.query.cliente;;
         
         await darLike(idCliente, idAvaliacao);
 
@@ -75,9 +75,8 @@ endpoints.post('/produto/avaliacao/:id/like', async (req, resp) => {
 
 endpoints.delete('/produto/avaliacao/:id/like', async (req, resp) => {
     try {   
-
         let idAvaliacao = req.params.id;
-        let idCliente = req.body.idCliente;
+        let idCliente = req.query.cliente;;
         
         await tirarLike(idCliente, idAvaliacao);
 
