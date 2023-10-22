@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { buscarAvaliacoes, darLike, inserirAvaliacao, numeroLikes, tirarLike, verificarLike } from "../repository/avaliacoesRepository.js";
+import { buscarAvaliacoes, darLike, deletarAvaliacao, inserirAvaliacao, numeroLikes, tirarLike, verificarLike } from "../repository/avaliacoesRepository.js";
 
 const endpoints = Router({strict: true});
 
@@ -27,6 +27,19 @@ endpoints.post('/produto/:id/avaliacao', async (req, resp) => {
         let r = await inserirAvaliacao(idProduto, avaliacao);
 
         resp.send(r);
+        
+    } catch (error) {
+        resp.status(500).send(error.message);
+    }
+})
+
+endpoints.delete('/produto/avaliacao/:id', async (req, resp) => {
+    try {
+        let idAvaliacao = req.params.id;
+        
+        await deletarAvaliacao(idAvaliacao);
+        
+        resp.status(204).send();
         
     } catch (error) {
         resp.status(500).send(error.message);

@@ -41,6 +41,18 @@ export async function inserirAvaliacao(idProduto, avaliacao) {
     return avaliacao;
 }
 
+export async function deletarAvaliacao(idAvaliacao) {
+    let sql = 
+    `
+        delete from     tb_avaliacao
+              where     id_avaliacao = ?
+    `
+
+    let [resp] = await con.query(sql, [idAvaliacao]);
+
+    return resp;
+}
+
 export async function darLike(idCliente, idAvaliacao) {
     let sql = 
     `
