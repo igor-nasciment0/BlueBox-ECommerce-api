@@ -96,7 +96,8 @@ export async function verificarLike(idCliente, idAvaliacao) {
 export async function numeroLikes(idAvaliacao) {
     let sql = 
     `
-        select id_cliente           idCliente,
+        select id_avaliacao_like    id,
+               id_cliente           idCliente,
                id_avaliacao         idAvaliacao
           from tb_avaliacao_like
                where                id_avaliacao = ?

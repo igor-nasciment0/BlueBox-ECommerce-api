@@ -51,7 +51,10 @@ endpoints.get('/produto/avaliacao/:id/numerolikes', async (req, resp) => {
         let idAvaliacao = req.params.id;
         let r = await numeroLikes(idAvaliacao);
 
-        resp.send({numeroLikes: r.length});
+        resp.send({
+            numeroLikes: r.length,
+            likes: r 
+        });
         
     } catch (error) {
         resp.status(500).send(error.message);
