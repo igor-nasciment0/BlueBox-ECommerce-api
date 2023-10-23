@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from "express";
 import cors from 'cors';
+import cors_proxy from 'cors-anywhere';
 
 import produtosController from './controller/produtosController.js';
 import admController from './controller/admController.js';
@@ -23,3 +24,13 @@ server.use(promocoesController)
 server.use(avaliacoesController)
 
 server.listen(process.env.PORT, () => console.log('API ONLINE NA PORTA ' + process.env.PORT));
+
+
+var host = 'localhost';
+var port = 8080;
+
+cors_proxy.createServer({
+    originWhitelist: [], // Allow all origins
+}).listen(port, host, function() {
+    console.log('Running CORS Anywhere on ' + host + ':' + port);
+});
