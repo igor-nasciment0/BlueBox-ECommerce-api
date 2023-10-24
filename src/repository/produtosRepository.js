@@ -1,7 +1,29 @@
 import con from "./conexao.js";
 
-export async function consultaProduto(nome) {
-    nome = `%${nome}%`
+export async function consultaProduto(nome, filtro, ordem) {
+    nome = `%${nome}%`;
+
+    switch (ordem) {
+        case "alfabetico":
+            ordem = "nm_produto";
+            break;
+        case "preco":
+            ordem = "vl_preco";
+            break;
+        case "data":
+            ordem = "dt_cadastro";
+            break;
+        default:
+            ordem = "id_produto";
+    }
+
+    switch (filtro) {
+        case "promocao":
+            filtro = 'and bt_promocao = true'
+            break;
+        default:
+            filtro = '';
+    }
 
     let sql = 
     `
@@ -14,19 +36,23 @@ export async function consultaProduto(nome) {
                vl_promocional       valorPromocional,
                ds_produto           descricao,
                ds_especificacoes    especificacoes,
-               p.id_categoria       categoria,
-               p.id_marca           marca,
+               p.id_categoria       idCategoria,
+               p.id_marca           idMarca,
+               ds_categoria         categoria,
+               ds_marca             marca,
                vl_peso              peso,
                dt_cadastro          dataCadastro
           from tb_produto           as p
     inner join tb_categoria         on p.id_categoria = tb_categoria.id_categoria
     inner join tb_marca             on p.id_marca = tb_marca.id_marca
-         where nm_produto           like ?
+         where (nm_produto          like ?
             or ds_marca             like ?
-            or ds_categoria         like ?
+            or ds_categoria         like ?) ${filtro}
+      order by                      ?
     `
 
-    let [resp] = await con.query(sql, [nome, nome, nome])
+
+    let [resp] = await con.query(sql, [nome, nome, nome, ordem])
     return resp;
 }
 

@@ -8,6 +8,8 @@ const upload = multer({dest: 'storage/imagens-produtos'})
 endpoints.get('/produto', async (req, resp) => {
     try {
         let nome = req.query.nome;
+        let ordem = req.query.ordem;
+        let filtro = req.query.filtro;
 
         if(!nome)
             nome = '';
