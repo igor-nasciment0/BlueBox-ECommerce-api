@@ -11,7 +11,7 @@ export async function consultaProduto(nome, filtro, ordem) {
             ordem = "vl_preco";
             break;
         case "data":
-            ordem = "dt_cadastro";
+            ordem = "dt_cadastro DESC";
             break;
         default:
             ordem = "id_produto";
@@ -48,11 +48,12 @@ export async function consultaProduto(nome, filtro, ordem) {
          where (nm_produto          like ?
             or ds_marca             like ?
             or ds_categoria         like ?) ${filtro}
-      order by                      ?
+      order by                      bt_promocao DESC, ? 
     `
 
 
     let [resp] = await con.query(sql, [nome, nome, nome, ordem])
+    console.log(resp);
     return resp;
 }
 
@@ -68,6 +69,8 @@ export async function consultaProdutoPorid(id){
                vl_promocional       valorPromocional,
                ds_produto           descricao,
                ds_especificacoes    especificacoes,
+               p.id_categoria       idCategoria,
+               p.id_marca           idMarca,
                ds_categoria         categoria,
                ds_marca             marca,
                vl_peso              peso,
