@@ -53,7 +53,7 @@ export async function consultaProduto(nome, filtro, ordem) {
 
 
     let [resp] = await con.query(sql, [nome, nome, nome, ordem])
-    console.log(resp);
+
     return resp;
 }
 

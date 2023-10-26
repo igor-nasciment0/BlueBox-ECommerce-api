@@ -135,6 +135,7 @@ create table tb_pedido (
 	id_pedido 			int primary key not null auto_increment,
 	id_cliente 			int not null,
 	id_produto 			int not null,
+	vl_produto			decimal(10, 2) not null,
 	vl_preco_total 		decimal(10, 2) not null,
 	id_estado_pedido	int not null,
 	id_tipo_pagamento 	int not null,
