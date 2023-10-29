@@ -16,7 +16,6 @@ let dados = {
         else {
             return next();
         }
-
     }
 }
 
