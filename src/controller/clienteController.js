@@ -1,5 +1,5 @@
 import Router from "express";
-import { cadastroCliente, calcularIdade, inserirImagemUsuario, loginCliente, verificarCPF, verificarEmail } from "../repository/clienteRepository.js";
+import { atualizarCliente, cadastroCliente, calcularIdade, inserirImagemUsuario, loginCliente, verificarCPF, verificarEmail } from "../repository/clienteRepository.js";
 import multer from "multer";
 
 const endpoints = Router();
@@ -69,6 +69,24 @@ endpoints.post('/usuario/login', async (req, resp) => {
     }
 })
 
+endpoints.put('/usuario/:id', async (req, resp) => {
+    try {
+        let idCliente = req.params.id;
+        let newCliente = req.body;
+
+        let r = await atualizarCliente(newCliente, idCliente);
+
+        if(r.affectedRows != 1)
+            throw new Error('Não foi possível atualizar os dados. Tente novamente mais tarde.');
+
+        resp.status(204).send();
+
+    } catch (error) {
+        console.log(error);
+        resp.status(500).send(error.message);
+    }
+})
+
 endpoints.put('/usuario/:id/imagem', upload.single('imagem'), async (req, resp) => {
     try {
         let idUsuario = req.params.id;
@@ -77,12 +95,12 @@ endpoints.put('/usuario/:id/imagem', upload.single('imagem'), async (req, resp) 
         let linhasAfetadas = await inserirImagemUsuario(idUsuario, imagem)
 
         if(linhasAfetadas !== 1)
-            throw new Error('Não foi possível adicionar a imagem.')
+            throw new Error('Não foi possível alterar a imagem. Tente novamente mais tarde.')
 
         resp.status(204).send();
 
     } catch (error) {
-        resp.status(500).send();
+        resp.status(500).send(error.message);
     }
 })
 

@@ -83,6 +83,20 @@ export async function inserirImagemUsuario(idCliente, imagem) {
     return resp.affectedRows;
 }
 
+export async function atualizarCliente(cliente, idCliente) {
+    let sql = 
+    `
+        update      tb_cliente 
+           set      ds_email    = ?,
+                    ds_telefone = ?
+         where      id_cliente  = ?
+    `
+
+    let [resp] = await con.query(sql, [cliente.email, cliente.telefone, idCliente]);
+
+    return resp;
+}
+
 export function calcularIdade(data)
 {
     let hoje = new Date();
