@@ -149,6 +149,13 @@ create table tb_pedido (
 	foreign key (id_tipo_pagamento) references tb_tipo_pagamento(id_pagamento)
 );
 
+create table tb_pedido_produto(
+	id_pedido		int,
+	id_produto		int,
+	foreign key 	(id_produto) references tb_produto(id_produto),
+	foreign key 	(id_pedido) references tb_pedido(id_pedido),
+)
+
 
 -- testes com dados aleatórios
        
