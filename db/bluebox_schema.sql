@@ -41,7 +41,7 @@ create table tb_cliente (
 	img_perfil 			varchar(500),
 	dt_cadastro 		datetime not null,
 	foreign key (id_endereco) references tb_endereco(id_endereco)
-);
+);	
 
 
 -- TABELAS DO PRODUTO
