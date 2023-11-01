@@ -18,10 +18,25 @@ export async function adicionarProdutoCupom(idCupom, idProduto) {
     let sql =
     `
         insert into tb_cupom_produto(id_cupom, id_produto)
-                              values(?, ?);
+                              values(?, ?)
     `
 
-    let [r] = await con.query(sql, idCupom, idProduto);
+    let [r] = await con.query(sql, [idCupom, idProduto]);
+
+    return r;
+}
+
+export async function buscarCupom(codigo) {
+    let sql = 
+    `
+        select ds_cupom         codigo,
+               vl_desconto      percentDesconto,
+               dt_expiracao     expiracao
+          from tb_cupom
+         where ds_cupom         = ?
+    `
+
+    let [r] = await con.query(sql, [codigo]);
 
     return r;
 }

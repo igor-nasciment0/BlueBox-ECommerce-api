@@ -106,7 +106,7 @@ create table tb_avaliacao_like(
 create table tb_cupom (
 	id_cupom 			int primary key not null auto_increment,
 	ds_cupom 			varchar(30) not null,
-	vl_desconto 		decimal(3, 2) not null,
+	vl_desconto 		decimal(3, 1) not null,
 	dt_expiracao 		datetime not null
 );
 
