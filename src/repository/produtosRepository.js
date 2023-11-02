@@ -178,19 +178,17 @@ export async function inserirImagemProduto(idProduto, imagem, primaria) {
     return resp.affectedRows;
 }
 
-export async function deletarImagem(id) {
+export async function deletarImagem(idImagem) {
     let sql = 
     `
         delete from     tb_produto_imagem
               where     id_produto_imagem = ?
     `
 
-    let [resp] = await con.query(sql, [id]);
+    let [resp] = await con.query(sql, [idImagem]);
 
     return resp.affectedRows;
 }
-
-
 
 export async function listarCategorias() {
     let sql = 
