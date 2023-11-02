@@ -22,4 +22,8 @@ let dados = {
 let con = await mysql.createConnection(dados);
 console.log('Conexão criada');
 
+setInterval(() => {
+    con.query('select id_categoria from tb_categoria')
+}, 300000);
+
 export default con;
