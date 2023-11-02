@@ -14,7 +14,7 @@ endpoints.get('/produto', async (req, resp) => {
         if(!nome)
             nome = '';
 
-        let produtos = await consultaProduto(nome);
+        let produtos = await consultaProduto(nome, filtro, ordem);
 
         resp.send(produtos)
 

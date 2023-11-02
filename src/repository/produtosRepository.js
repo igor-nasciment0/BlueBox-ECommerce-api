@@ -7,7 +7,10 @@ export async function consultaProduto(nome, filtro, ordem) {
         case "alfabetico":
             ordem = "nm_produto";
             break;
-        case "preco":
+        case "preco_desc":
+            ordem = "vl_preco DESC";
+            break;
+        case "preco_asc":
             ordem = "vl_preco";
             break;
         case "data":
@@ -48,9 +51,8 @@ export async function consultaProduto(nome, filtro, ordem) {
          where (nm_produto          like ?
             or ds_marca             like ?
             or ds_categoria         like ?) ${filtro}
-      order by                      bt_promocao DESC, ? 
+      order by                      ${ordem} 
     `
-
 
     let [resp] = await con.query(sql, [nome, nome, nome, ordem])
 
