@@ -34,6 +34,7 @@ export async function buscarPedidoPorEstado(IdEstadoPedido) {
                     ds_sobrenome         sobrenomeCliente,           
                     vl_produtos          valorProdutos,
                     vl_frete             valorFrete,
+                    id_estado_pedido     idEstado,
                     ds_estado_pedido     estado,
                     tp_pagamento         tipoPagamento,
                     dt_compra            dataCompra,
