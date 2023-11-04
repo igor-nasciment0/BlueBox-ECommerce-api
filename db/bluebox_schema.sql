@@ -123,7 +123,7 @@ create table tb_cupom_produto (
 
 create table tb_tipo_pagamento (
 	id_pagamento 		int primary key not null auto_increment,
-	tp_pagamento 		int not null
+	tp_pagamento 		varchar(200) not null
 );
 
 create table tb_estado_pedido (
@@ -138,20 +138,22 @@ create table tb_pedido (
 	vl_frete			decimal(10, 2) not null,
 	id_estado_pedido	int not null,
 	id_tipo_pagamento 	int not null,
+	id_cupom			int,
 	dt_compra 			datetime not null,
 	dt_aprovacao 		datetime,
 	dt_saida 			datetime,
 	dt_entrega			datetime,
 	foreign key (id_cliente) references tb_cliente(id_cliente),
-	foreign key (id_produto) references tb_produto(id_produto),
 	foreign key (id_estado_pedido) references tb_estado_pedido(id_estado_pedido),
-	foreign key (id_tipo_pagamento) references tb_tipo_pagamento(id_pagamento)
+	foreign key (id_tipo_pagamento) references tb_tipo_pagamento(id_pagamento),
+	foreign key (id_cupom) references tb_cupom(id_cupom)
 );
 
 create table tb_pedido_produto(
-	id_pedido		int,
-	id_produto		int,
+	id_pedido		int not null,
+	id_produto		int not null,
 	vl_produto		decimal(10, 2) not null,
+	ds_quantidade	int not null,
 	foreign key 	(id_produto) references tb_produto(id_produto),
 	foreign key 	(id_pedido) references tb_pedido(id_pedido)
 );
@@ -175,12 +177,15 @@ insert into tb_marca(ds_marca)
 			('Bandai Namco');
 
 insert into tb_estado_pedido(ds_estado_pedido)
-					  values('Pedido feito'),
-					  		('Pagamento aprovado'),
+					  values('Aguardando aprovação'),
 							('Em preparação'),
 							('A caminho'),
 							('Entregue');
-		
+
+insert into tb_tipo_pagamento(tp_pagamento)
+					   values('Cartão de Crédito'),
+							 ('PIX');
+
 insert into tb_produto(nm_produto, vl_preco, vl_promocional, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
      			values('The Legend of Zelda: Breath of the Wild', '50.50', '37.45', 1, '50', 'Explore horas de diversão com \"The Legend of Zelda: Breath of the Wild\", uma experiência emocionante para jogadores de todas as idades. Este jogo de ação e aventura oferece uma jogabilidade envolvente, gráficos deslumbrantes e uma narrativa cativante que o manterá imerso do início ao fim.\n\nEste jogo \"The Legend of Zelda: Breath of the Wild\" é um tesouro para qualquer fã da série Zelda ou jogador de Nintendo Switch. Aproveite a oportunidade de explorar o vasto mundo de Hyrule, resolver quebra-cabeças desafiadores e enfrentar inimigos formidáveis. Nossos jogos usados passam por uma rigorosa verificação de qualidade para garantir uma experiência de jogo excepcional.\n\nDescubra a diversão e a emoção de \"The Legend of Zelda: Breath of the Wild\" com a qualidade confiável da BlueBox. Encomende agora e desfrute de uma jornada épica pelo reino de Hyrule!', 'Plataforma: Nintendo Switch\nCondição: Usado - Excelente\nAno de Lançamento: 2017\nIdioma: Inglês (também disponível em outros idiomas)\nClassificação Etária: 10+\nConteúdo Incluso: Cartucho do jogo, caixa original e manual de instruções', 6, 3, 1, 250, '2023-10-19 21:51:40');
 

@@ -8,6 +8,7 @@ import usuarioController from './controller/clienteController.js';
 import promocoesController from './controller/promocoesController.js';
 import avaliacoesController from './controller/avaliacoesController.js';
 import cupomController from './controller/cupomController.js';
+import pedidoController from './controller/pedidoController.js';
 
 const server = express(); 
 
@@ -23,5 +24,6 @@ server.use(usuarioController)
 server.use(promocoesController)
 server.use(avaliacoesController)
 server.use(cupomController);
+server.use(pedidoController);
 
 server.listen(process.env.API_PORT, () => console.log('API ONLINE NA PORTA ' + process.env.API_PORT));
