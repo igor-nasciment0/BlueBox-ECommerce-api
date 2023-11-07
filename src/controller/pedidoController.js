@@ -35,6 +35,10 @@ endpoints.get('/pedido/:id', async (req, resp) => {
 
         let pedidos = await buscarPedidoPorID(idPedido);
 
+        if(!pedidos) {
+            throw new Error('ID do pedido inválido.')
+        }
+
         resp.send(pedidos);
 
     } catch (error) {

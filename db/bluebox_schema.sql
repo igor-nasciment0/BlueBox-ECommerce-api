@@ -140,6 +140,7 @@ create table tb_pedido (
 	id_tipo_pagamento 	int not null,
 	id_cupom			int,
 	dt_compra 			datetime not null,
+	dt_entrega_prevista datetime not null,
 	dt_aprovacao 		datetime,
 	dt_saida 			datetime,
 	dt_entrega			datetime,
