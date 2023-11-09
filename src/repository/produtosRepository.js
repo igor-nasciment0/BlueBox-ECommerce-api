@@ -89,7 +89,7 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
             filtro = '';
     }
 
-    let offset = (pagina ? Number(pagina) : 1) * 30
+    let offset = (Number(pagina) - 1) * 20
 
     let sql = 
     `
@@ -113,7 +113,7 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
     inner join tb_marca             on p.id_marca = tb_marca.id_marca
          where nm_produto           like ? ${filtro}
       order by                      ${ordem} 
-         limit 30 offset ?               
+         limit 20 offset ?               
     `
 
     let [resp] = await con.query(sql, [nome, offset])
