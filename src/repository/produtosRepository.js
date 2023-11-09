@@ -16,6 +16,8 @@ export async function consultaProduto(nome, filtro, ordem) {
         case "data":
             ordem = "dt_cadastro DESC";
             break;
+        case "promoData":
+            ordem = "bt_promocao DESC, dt_cadastro DESC"
         default:
             ordem = "id_produto";
     }
@@ -62,9 +64,6 @@ export async function consultaProduto(nome, filtro, ordem) {
 export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
     nome = `%${nome}%`;
 
-    if(!pagina)
-        pagina = 1; 
-
     switch (ordem) {
         case "alfabetico":
             ordem = "nm_produto";
@@ -90,7 +89,7 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
             filtro = '';
     }
 
-    let offset = Number(pagina) * 30;
+    let offset = (pagina ? Number(pagina) : 1) * 30
 
     let sql = 
     `
