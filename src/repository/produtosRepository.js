@@ -30,8 +30,8 @@ export async function consultaProduto(nome, filtro, ordem) {
             filtro = '';
     }
 
-    let sql = 
-    `
+    let sql =
+        `
         select id_produto           id,
                nm_produto           nome,
                qtd_estoque          estoque,
@@ -64,26 +64,25 @@ export async function consultaProduto(nome, filtro, ordem) {
 export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
     nome = `%${nome}%`;
 
+    console.log(ordem);
+
     switch (ordem) {
-        case "alfabetico":
-            ordem = "nm_produto";
+        case "maior_preco":
+            ordem = "vl_preco desc";
             break;
-        case "preco_desc":
-            ordem = "vl_preco DESC";
-            break;
-        case "preco_asc":
+        case "menor_preco":
             ordem = "vl_preco";
-            break;
-        case "data":
-            ordem = "dt_cadastro DESC";
             break;
         default:
             ordem = "id_produto";
     }
 
     switch (filtro) {
-        case "promocao":
-            filtro = 'and bt_promocao = true'
+        case "usado":
+            filtro = 'and bt_usado = true'
+            break;
+        case "novo":
+            filtro = 'and bt_usado = false'
             break;
         default:
             filtro = '';
@@ -91,8 +90,8 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
 
     let offset = (Number(pagina) - 1) * 20
 
-    let sql = 
-    `
+    let sql =
+        `
         select id_produto           id,
                nm_produto           nome,
                qtd_estoque          estoque,
@@ -121,7 +120,7 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
     return resp;
 }
 
-export async function consultaProdutoPorid(id){
+export async function consultaProdutoPorid(id) {
     let sql = `
         select id_produto           id,
                nm_produto           nome,
@@ -149,40 +148,40 @@ export async function consultaProdutoPorid(id){
 }
 
 export async function deletarProduto(id) {
-    
-    let sql = 
-    `
+
+    let sql =
+        `
         delete from tb_produto
         where id_produto = ?
     `
 
     let [resp] = await con.query(sql, [id]);
-    
+
     return resp;
 }
 
-export async function inserirProduto(produto){
+export async function inserirProduto(produto) {
     let sql = `
         insert into tb_produto(nm_produto, vl_preco, bt_promocao, qtd_estoque, ds_produto, ds_especificacoes, id_categoria, id_marca, bt_usado, vl_peso, dt_cadastro)
         values(?, ?, false, ?, ?, ?, ?, ?, ?, ?, NOW())
     `
     let [resp] = await con.query(sql, [produto.nome,
-                                       produto.preco,
-                                       produto.estoque,
-                                       produto.descricao,
-                                       produto.especificacoes,
-                                       produto.categoria,
-                                       produto.marca,
-                                       produto.usado,
-                                       produto.peso,
-                                       produto.cadastro]);
+    produto.preco,
+    produto.estoque,
+    produto.descricao,
+    produto.especificacoes,
+    produto.categoria,
+    produto.marca,
+    produto.usado,
+    produto.peso,
+    produto.cadastro]);
 
     produto.id = resp.insertId;
 
-    return produto;              
+    return produto;
 }
 
-export async function alterarProduto(id, produto){
+export async function alterarProduto(id, produto) {
     let sql = `update tb_produto
                   set nm_produto = ?,
                       vl_preco = ?,
@@ -197,23 +196,23 @@ export async function alterarProduto(id, produto){
                       where id_produto = ?`
 
     let [resp] = await con.query(sql, [produto.nome,
-                                       produto.preco,
-                                       produto.estoque,
-                                       produto.descricao,
-                                       produto.especificacoes,
-                                       produto.categoria,
-                                       produto.marca,
-                                       produto.usado,
-                                       produto.peso,
-                                       id]);
+    produto.preco,
+    produto.estoque,
+    produto.descricao,
+    produto.especificacoes,
+    produto.categoria,
+    produto.marca,
+    produto.usado,
+    produto.peso,
+        id]);
 
     let linhasAfetadas = resp.affectedRows
-    return linhasAfetadas;               
+    return linhasAfetadas;
 }
 
 export async function buscarImagens(idProduto) {
-    let sql = 
-    `
+    let sql =
+        `
         select id_produto_imagem    id,
                id_produto           idProduto,
                ds_imagem_url        url,
@@ -228,8 +227,8 @@ export async function buscarImagens(idProduto) {
 }
 
 export async function inserirImagemProduto(idProduto, imagem, primaria) {
-    let sql = 
-    `
+    let sql =
+        `
         insert into tb_produto_imagem (id_produto, ds_imagem_url, bt_img_primaria)
                                values (?, ?, ?);
     `
@@ -240,8 +239,8 @@ export async function inserirImagemProduto(idProduto, imagem, primaria) {
 }
 
 export async function deletarImagem(idImagem) {
-    let sql = 
-    `
+    let sql =
+        `
         delete from     tb_produto_imagem
               where     id_produto_imagem = ?
     `
@@ -252,8 +251,8 @@ export async function deletarImagem(idImagem) {
 }
 
 export async function listarCategorias() {
-    let sql = 
-    `
+    let sql =
+        `
         select id_categoria     id,
                ds_categoria     categoria
           from tb_categoria
@@ -265,8 +264,8 @@ export async function listarCategorias() {
 }
 
 export async function listarMarcas() {
-    let sql = 
-    `
+    let sql =
+        `
         select id_marca     id,
                ds_marca     marca
           from tb_marca
