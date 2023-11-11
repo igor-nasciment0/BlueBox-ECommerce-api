@@ -65,8 +65,6 @@ export async function consultaProduto(nome, filtro, ordem) {
 export async function consultaProdutoPagina(nome, categoria, filtro, ordem, pagina) {
     nome = `%${nome}%`;
 
-    console.log(ordem);
-
     switch (ordem) {
         case "maior_preco":
             ordem = "vl_preco desc";
