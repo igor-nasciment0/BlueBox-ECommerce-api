@@ -164,12 +164,12 @@ create table tb_pedido_produto(
        
        
 insert into tb_categoria(ds_categoria)
-	 values ('Console'),
-	 		('Action Figure'),
-			('Jogo para PC'),
-			('Jogo para Xbox'),
-			('Jogo para Playstation'),
-			('Jogo para Nintendo');
+	 values ('Jogos para Playstation'),
+	 		('Jogos para Xbox'),
+			('Jogos para Nintendo'),
+			('Consoles'),
+			('Acessórios'),
+			('Raridades');
 
 insert into tb_marca(ds_marca)
 	 values ('Microsoft'),

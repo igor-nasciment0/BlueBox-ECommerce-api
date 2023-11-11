@@ -61,7 +61,7 @@ export async function consultaProduto(nome, filtro, ordem) {
     return resp;
 }
 
-export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
+export async function consultaProdutoPagina(nome, categoria, filtro, ordem, pagina) {
     nome = `%${nome}%`;
 
     console.log(ordem);
@@ -88,6 +88,29 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
             filtro = '';
     }
 
+    switch (categoria) {
+        case "Playstation":
+            categoria = "and p.id_categoria = 1"
+            break;
+        case "Xbox":
+            categoria = "and p.id_categoria = 2"
+            break;
+        case "Nintendo":
+            categoria = "and p.id_categoria = 3"
+            break;
+        case "Consoles":
+            categoria = "and p.id_categoria = 4"
+            break;
+        case "Acessórios":
+            categoria = "and p.id_categoria = 5"
+            break;
+        case "Raridades":
+            categoria = "and p.id_categoria = 6"
+            break;
+        default:
+            categoria = '';
+    }
+
     let offset = (Number(pagina) - 1) * 20
 
     let sql =
@@ -110,7 +133,7 @@ export async function consultaProdutoPagina(nome, filtro, ordem, pagina) {
           from tb_produto           as p
     inner join tb_categoria         on p.id_categoria = tb_categoria.id_categoria
     inner join tb_marca             on p.id_marca = tb_marca.id_marca
-         where nm_produto           like ? ${filtro}
+         where nm_produto           like ? ${filtro} ${categoria}
       order by                      ${ordem} 
          limit 20 offset ?               
     `

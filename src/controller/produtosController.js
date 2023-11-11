@@ -40,6 +40,7 @@ endpoints.get('/produto/pagina/:pagina', async (req, resp) => {
    try {
 
     let nome = req.query.nome;
+    let categoria = req.query.categoria;
     let ordem = req.query.ordem;
     let filtro = req.query.filtro;
     let pagina = req.params.pagina;
@@ -50,7 +51,7 @@ endpoints.get('/produto/pagina/:pagina', async (req, resp) => {
     if(pagina == 'null')
         pagina = 1;
 
-    let produtos = await consultaProdutoPagina(nome, filtro, ordem, pagina);
+    let produtos = await consultaProdutoPagina(nome, categoria, filtro, ordem, pagina);
 
     resp.send(produtos)    
     
