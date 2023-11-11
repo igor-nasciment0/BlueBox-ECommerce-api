@@ -18,6 +18,7 @@ export async function consultaProduto(nome, filtro, ordem) {
             break;
         case "promoData":
             ordem = "bt_promocao DESC, dt_cadastro DESC"
+            break;
         default:
             ordem = "id_produto";
     }
@@ -72,6 +73,9 @@ export async function consultaProdutoPagina(nome, categoria, filtro, ordem, pagi
             break;
         case "menor_preco":
             ordem = "vl_preco";
+            break;
+        case "promoData":
+            ordem = "bt_promocao DESC, dt_cadastro DESC"
             break;
         default:
             ordem = "id_produto";

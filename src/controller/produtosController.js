@@ -48,7 +48,7 @@ endpoints.get('/produto/pagina/:pagina', async (req, resp) => {
     if(!nome)
         nome = '';
 
-    if(pagina == 'null')
+    if(!pagina || pagina == 'null')
         pagina = 1;
 
     let produtos = await consultaProdutoPagina(nome, categoria, filtro, ordem, pagina);
