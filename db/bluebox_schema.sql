@@ -23,9 +23,9 @@ create table tb_endereco (
 	ds_logradouro 		varchar(200) not null,
 	ds_bairro 			varchar(200) not null,
 	ds_cidade 			varchar(200) not null,
+	ds_estado			varchar(200) not null,
 	ds_cep 				varchar(100) not null,
 	nr_endereco 		int not null,
-	ds_complemento 		varchar(20)
 );
 
 create table tb_cliente (
