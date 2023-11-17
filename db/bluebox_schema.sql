@@ -134,6 +134,7 @@ create table tb_estado_pedido (
 create table tb_pedido (
 	id_pedido 			int primary key not null auto_increment,
 	id_cliente 			int not null,
+	id_endereco			int not null,
 	vl_produtos			decimal(10, 2) not null,
 	vl_frete			decimal(10, 2) not null,
 	id_estado_pedido	int not null,
@@ -145,6 +146,7 @@ create table tb_pedido (
 	dt_saida 			datetime,
 	dt_entrega			datetime,
 	foreign key (id_cliente) references tb_cliente(id_cliente),
+	foreign key (id_endereco) references tb_endereco(id_endereco),
 	foreign key (id_estado_pedido) references tb_estado_pedido(id_estado_pedido),
 	foreign key (id_tipo_pagamento) references tb_tipo_pagamento(id_pagamento),
 	foreign key (id_cupom) references tb_cupom(id_cupom)

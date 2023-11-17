@@ -3,11 +3,12 @@ import con from "./conexao.js"
 export async function criarPedido(infoPedido) {
     let sql =
         `
-        insert into tb_pedido(id_cliente, vl_produtos, vl_frete, id_estado_pedido, id_tipo_pagamento, dt_compra, dt_entrega_prevista)
-                       values(?, ?, ?, 1, ?, NOW(), ?);
+        insert into tb_pedido(id_cliente, id_endereco, vl_produtos, vl_frete, id_estado_pedido, id_tipo_pagamento, dt_compra, dt_entrega_prevista)
+                       values(?, ?, ?, ?, 1, ?, NOW(), ?);
     `
 
     let [r] = await con.query(sql, [infoPedido.idCliente,
+                                    infoPedido.idEndereco,
                                     infoPedido.valorProdutos,
                                     infoPedido.valorFrete,
                                     infoPedido.idTipoPagamento,
@@ -96,6 +97,7 @@ export async function buscarPedidoPorID(idPedido) {
         `
         select      id_pedido               id,
                     this.id_cliente         idCliente,
+                    this.id_endereco        id_endereco,
                     ds_nome                 nomeCliente,
                     ds_sobrenome            sobrenomeCliente,           
                     vl_produtos             valorProdutos,
@@ -112,6 +114,7 @@ export async function buscarPedidoPorID(idPedido) {
     inner join      tb_cliente              on this.id_cliente = tb_cliente.id_cliente
     inner join      tb_estado_pedido        on this.id_estado_pedido = tb_estado_pedido.id_estado_pedido
     inner join      tb_tipo_pagamento       on this.id_tipo_pagamento = tb_tipo_pagamento.id_pagamento
+    inner join      tb_endereco             on this.id_endereco = tb_endereco.id_endereco
      left join      tb_cupom                on this.id_cupom = tb_cupom.id_cupom 
          where      id_pedido           = ?
     `
