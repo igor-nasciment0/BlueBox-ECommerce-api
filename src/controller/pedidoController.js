@@ -33,13 +33,17 @@ endpoints.get('/pedido/:id', async (req, resp) => {
     try {
         let idPedido = req.params.id;
 
-        let pedidos = await buscarPedidoPorID(idPedido);
+        let pedido = await buscarPedidoPorID(idPedido);
 
-        if(!pedidos) {
+        if(!pedido) {
             throw new Error('ID do pedido inválido.')
         }
 
-        resp.send(pedidos);
+        let produtosPedido = await buscarProdutosPedido(idPedido);
+
+        pedido.produtos = produtosPedido;
+
+        resp.send(pedido);
 
     } catch (error) {
         resp.status(500).send(error.message);
