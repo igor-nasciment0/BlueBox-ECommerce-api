@@ -1,7 +1,37 @@
 import { Router } from 'express';
-import { adicionarCupom, adicionarProdutoCupom, buscarCupom } from '../repository/cupomRepository.js';
+import { adicionarCupom, adicionarProdutoCupom, buscarCupom, buscarProdutoCupom } from '../repository/cupomRepository.js';
 
 const endpoints = Router();
+
+endpoints.get('/cupom', async (req, resp) => {
+    try {
+        let {codigo, idProduto} = req.query 
+
+        let cupom = await buscarCupom(codigo);
+
+        if(!cupom) {
+            throw new Error('Este código de cupom é inválido.')
+        }
+
+        let hoje = new Date();
+        let expiracao = new Date(cupom.expiracao);
+
+        if(hoje > expiracao) {
+            throw new Error('Este cupom está expirado.');
+        }
+
+        let produto = await buscarProdutoCupom(idProduto, cupom.idCupom);
+
+        if(produto) {
+            resp.send({cupomServe: true, desconto: cupom.percentDesconto / 100}); 
+        } else {
+            resp.send({cupomServe: false})
+        }       
+        
+    } catch (error) {
+        resp.status(500).send(error.message);
+    }
+})
 
 endpoints.post('/cupom', async (req, resp) => {
     try {
@@ -19,7 +49,7 @@ endpoints.post('/cupom', async (req, resp) => {
 
         let cupomExistente = await buscarCupom(cupom.codigo);
 
-        if(cupomExistente.length > 0)
+        if(cupomExistente)
             throw new Error('Já existe um cupom com este código.');
 
         let r = await adicionarCupom(cupom);
