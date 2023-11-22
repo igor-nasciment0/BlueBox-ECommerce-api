@@ -14,10 +14,7 @@ endpoints.post('/usuario/cadastro', async (req, resp) => {
             throw new Error('Não foi possível realizar o cadastro.')
 
         if(!credenciais.nome || !credenciais.sobrenome || !credenciais.email || !credenciais.senha || !credenciais.telefone || !credenciais.cpf || !credenciais.dataNascimento)
-            throw new Error('Preencha todos os dados de cadastro.')
-
-        if(credenciais.senha.length < 8)
-            throw new Error('A senha deve ter pelo menos 8 caracteres.')            
+            throw new Error('Preencha todos os dados de cadastro.')           
 
         let emailCadastrado = await verificarEmail(credenciais.email)
         if(emailCadastrado.length !== 0)
