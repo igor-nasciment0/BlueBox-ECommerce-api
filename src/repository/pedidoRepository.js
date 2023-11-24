@@ -54,6 +54,7 @@ export async function buscarPedidoPorEstado(IdEstadoPedido) {
     inner join      tb_tipo_pagamento       on this.id_tipo_pagamento = tb_tipo_pagamento.id_pagamento
      left join      tb_cupom                on this.id_cupom = tb_cupom.id_cupom 
          where      this.id_estado_pedido   = ?
+      order by      dt_compra desc
     `
 
     let [r] = await con.query(sql, [IdEstadoPedido]);
