@@ -24,7 +24,7 @@ let dados = {
 }
 
 const pool = mysql.createPool(dados);
-const con = pool.getConnection();
+const con = await pool.getConnection();
 console.log('Conexão criada');
 
 setInterval(() => {
